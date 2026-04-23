@@ -1,3 +1,4 @@
+# API에서 주고받는 데이터의 형식과 규칙을 정함.
 from typing import List
 from pydantic import BaseModel, Field
 
