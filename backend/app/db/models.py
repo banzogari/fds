@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, Float, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, Float, String, DateTime, ForeignKey
 from sqlalchemy.sql import func
 from app.db.database import Base
 
@@ -73,7 +73,7 @@ class Prediction(Base):
     fraud_probability = Column(Float, nullable=False)
     predicted_label   = Column(Integer, nullable=False)
     threshold         = Column(Float, nullable=False)
-    model_mode        = Column(Integer, nullable=False)
+    model_mode        = Column(String, nullable=False)
 
     # 생성 시각 자동 기록
     created_at = Column(DateTime, server_default=func.now())
