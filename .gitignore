@@ -43,4 +43,5 @@ node_modules/
 # IDE
 # =========================
 .vscode/
-.idea/
+.idea/*.hwp
+*.pptx
