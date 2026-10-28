@@ -1,5 +1,6 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api import health, predict, simulate
 from app.db.database import Base, engine
@@ -7,17 +8,24 @@ from app.db.database import Base, engine
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # 서버 시작 시 실행
-    # DB에 테이블이 없으면 자동 생성
     Base.metadata.create_all(bind=engine)
     yield
-    # 서버 종료 시 실행
 
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.API_VERSION,
     lifespan=lifespan,
+)
+
+# CORS 설정
+# 프론트엔드(localhost:5173)에서 백엔드(localhost:8000) 접근 허용
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # 라우터 등록
