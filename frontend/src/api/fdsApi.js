@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const BASE_URL = 'http://localhost:8000/api';
+// const BASE_URL = '/api';   // 상대경로: Vite 프록시(vite.config.js) 경유 — 터널/배포 시 사용
 
 const api = axios.create({
   baseURL: BASE_URL,
