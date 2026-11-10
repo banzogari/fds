@@ -9,19 +9,19 @@ const api = axios.create({
   },
 });
 
-// 1. 서버 상태 확인
+// 서버 상태 확인
 export const health = async () => {
   const response = await api.get('/health');
   return response.data;
 };
 
-// 2. 단건 예측
+// 단건 예측
 export const predict = async (requestData) => {
   const response = await api.post('/predict', requestData);
   return response.data;
 };
 
-// 3. 시뮬레이션
+// 시뮬레이션
 export const simulate = async (rowIndex) => {
   const response = await api.post('/simulate', { row_index: rowIndex });
   return response.data;

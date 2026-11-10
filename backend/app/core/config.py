@@ -64,13 +64,16 @@ class Settings:
     # FEATURE ORDER
     # ⚠️ Class 컬럼은 label이므로 제외
     # ⚠️ 모델 재학습 없이 수정 금지
+    # ⚠️ rf.pkl 학습 순서(feature_names_in_)와 일치해야 함:
+    #    V1 … V28, Amount_scaled, Time_scaled
+    # TODO: 학습 시 StandardScaler로 Amount/Time을 스케일링함.
+    #       scaler.pkl 확보 후 예측 전에 Amount/Time 변환 적용 필요 (현재는 원본값 입력)
     FEATURE_ORDER = [
-        "Time",
         "V1",  "V2",  "V3",  "V4",  "V5",  "V6",  "V7",
         "V8",  "V9",  "V10", "V11", "V12", "V13", "V14",
         "V15", "V16", "V17", "V18", "V19", "V20", "V21",
         "V22", "V23", "V24", "V25", "V26", "V27", "V28",
-        "Amount",
+        "Amount", "Time",
     ]
 
     EXPECTED_FEATURE_COUNT = 30

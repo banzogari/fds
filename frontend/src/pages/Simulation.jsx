@@ -13,7 +13,7 @@ export default function Simulation() {
     try {
       const data = await simulate(rowIndex);
       setResult(data);
-    } catch (err) {
+    } catch {
       setError('시뮬레이션 요청 실패. 백엔드 서버를 확인하세요.');
     } finally {
       setLoading(false);
