@@ -66,8 +66,7 @@ class Settings:
     # ⚠️ 모델 재학습 없이 수정 금지
     # ⚠️ rf.pkl 학습 순서(feature_names_in_)와 일치해야 함:
     #    V1 … V28, Amount_scaled, Time_scaled
-    # TODO: 학습 시 StandardScaler로 Amount/Time을 스케일링함.
-    #       scaler.pkl 확보 후 예측 전에 Amount/Time 변환 적용 필요 (현재는 원본값 입력)
+    #    Amount/Time은 predictor에서 아래 SCALER 값으로 변환 후 입력
     FEATURE_ORDER = [
         "V1",  "V2",  "V3",  "V4",  "V5",  "V6",  "V7",
         "V8",  "V9",  "V10", "V11", "V12", "V13", "V14",
@@ -77,6 +76,17 @@ class Settings:
     ]
 
     EXPECTED_FEATURE_COUNT = 30
+
+    # SCALER (rf.pkl 학습 시 전처리 재현)
+    # - Amount_scaled = StandardScaler(log1p(Amount))
+    # - Time_scaled   = StandardScaler(Time)
+    # 학습 때 scaler 파일을 저장하지 않아, 분할 전 creditcard.csv 전체(284,807건)로
+    # fit한 평균/표준편차를 그대로 사용 (조원 확인 완료)
+    # ⚠️ 모델 재학습 없이 수정 금지
+    AMOUNT_LOG1P_MEAN = 3.152188061233118
+    AMOUNT_LOG1P_STD = 1.6566454788802987
+    TIME_MEAN = 94813.85957508067
+    TIME_STD = 47488.062585499334
 
     # 유효성 검사 (Fail-Fast)
     @classmethod
