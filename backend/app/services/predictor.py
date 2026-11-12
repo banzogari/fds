@@ -32,7 +32,6 @@ class Predictor:
         FEATURE_ORDER 기준으로 순서 고정
         """
         row = {
-            "Time": request.time,
             "V1": request.v1,   "V2": request.v2,   "V3": request.v3,
             "V4": request.v4,   "V5": request.v5,   "V6": request.v6,
             "V7": request.v7,   "V8": request.v8,   "V9": request.v9,
@@ -42,7 +41,11 @@ class Predictor:
             "V19": request.v19, "V20": request.v20, "V21": request.v21,
             "V22": request.v22, "V23": request.v23, "V24": request.v24,
             "V25": request.v25, "V26": request.v26, "V27": request.v27,
-            "V28": request.v28, "Amount": request.amount,
+            "V28": request.v28,
+            # 학습 시 전처리 재현: Amount → log1p → 표준화, Time → 표준화
+            "Amount": (np.log1p(request.amount) - settings.AMOUNT_LOG1P_MEAN)
+                      / settings.AMOUNT_LOG1P_STD,
+            "Time": (request.time - settings.TIME_MEAN) / settings.TIME_STD,
         }
         # FEATURE_ORDER 순서대로 배열 구성
         vector = [row[feature] for feature in settings.FEATURE_ORDER]
